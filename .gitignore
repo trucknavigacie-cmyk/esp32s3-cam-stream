@@ -1,5 +1,6 @@
 # Build artefakty
 build/
+!releases/*.bin
 *.elf
 *.map
 .arduino15/

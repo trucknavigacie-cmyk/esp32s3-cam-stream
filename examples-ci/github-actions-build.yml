@@ -1,0 +1,67 @@
+name: Build firmware
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ESP32S3_CAM_WEB/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'ESP32S3_CAM_WEB/**'
+  workflow_dispatch:
+
+env:
+  ESP32_CORE_VERSION: '3.3.12'
+  FQBN: 'esp32:esp32:esp32s3:CPUFreq=240,FlashMode=qio,FlashSize=16M,PartitionScheme=app3M_fat9M_16MB,PSRAM=opi,UploadSpeed=921600,USBMode=hwcdc,CDCOnBoot=cdc,UploadMode=default,JTAGAdapter=default,DebugLevel=none,EraseFlash=none,LoopCore=1,EventsCore=1,MSCOnBoot=default,DFUOnBoot=default'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install arduino-cli
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh \
+            | BINDIR=$HOME/.local/bin sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure arduino-cli
+        run: |
+          arduino-cli config init
+          arduino-cli config set board_manager.additional_urls \
+            https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core update-index
+
+      - name: Install ESP32 core
+        run: arduino-cli core install esp32:esp32@${{ env.ESP32_CORE_VERSION }}
+
+      - name: Show toolchain versions
+        run: |
+          arduino-cli version
+          arduino-cli core list
+
+      - name: Compile
+        run: |
+          arduino-cli compile \
+            --fqbn "$FQBN" \
+            --output-dir build \
+            ESP32S3_CAM_WEB
+
+      - name: Show size
+        run: |
+          ls -lh build/
+          sha256sum build/*.bin
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ github.sha }}
+          path: |
+            build/ESP32S3_CAM_WEB.ino.bin
+            build/ESP32S3_CAM_WEB.ino.merged.bin
+            build/ESP32S3_CAM_WEB.ino.bootloader.bin
+            build/ESP32S3_CAM_WEB.ino.partitions.bin
+          retention-days: 30

@@ -1,0 +1,58 @@
+# VS Code + Arduino extension — nastavenia pre tento projekt
+#
+# Vloz do .vscode/settings.json alebo do User Settings.
+
+{
+  "arduino.path": "/usr/bin",
+  "arduino.commandPath": "arduino-cli",
+  "arduino.useArduinoCli": true,
+  "arduino.logLevel": "info",
+  "arduino.enableUSBDetection": true,
+
+  "arduino.defaultBaudRate": 115200,
+
+  "arduino.board.esp32s3.fqbn": "esp32:esp32:esp32s3:CPUFreq=240,FlashMode=qio,FlashSize=16M,PartitionScheme=app3M_fat9M_16MB,PSRAM=opi,UploadSpeed=921600,USBMode=hwcdc,CDCOnBoot=cdc,UploadMode=default,JTAGAdapter=default,DebugLevel=none,EraseFlash=none,LoopCore=1,EventsCore=1,MSCOnBoot=default,DFUOnBoot=default",
+
+  "C_Cpp.default.includePath": [
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/tools/sdk/esp32s3/include",
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/cores/esp32",
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/libraries/WiFi/src",
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/libraries/FS/src",
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/libraries/SD_MMC/src",
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/libraries/WebServer/src",
+    "~/.arduino15/packages/esp32/hardware/esp32/3.3.12/libraries/Network/src",
+    "~/.arduino15/packages/esp32/tools/esp32s3-libs/3.3.12/include",
+    "~/.arduino15/packages/esp32/tools/esp32s3-libs/3.3.12/include/espressif__esp32-camera/driver/include",
+    "~/.arduino15/packages/esp32/tools/esp32s3-libs/3.3.12/include/espressif__esp32-camera/conversions/include",
+    "${workspaceFolder}/ESP32S3_CAM_WEB"
+  ],
+
+  "C_Cpp.default.defines": [
+    "ARDUINO=10819",
+    "ARDUINO_ARCH_ESP32",
+    "ESP32",
+    "CONFIG_IDF_TARGET_ESP32S3=1",
+    "BOARD_HAS_PSRAM",
+    "ARDUINO_RUNNING_CORE=1",
+    "ARDUINO_EVENT_RUNNING_CORE=1",
+    "ARDUINO_USB_MODE=1",
+    "ARDUINO_USB_CDC_ON_BOOT=1",
+    "CORE_DEBUG_LEVEL=0"
+  ],
+
+  "C_Cpp.default.compilerPath": "~/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32s3-elf-gcc",
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.intelliSenseMode": "gcc-x64",
+  "C_Cpp.intelliSenseEngine": "Tag Parser",
+
+  "files.associations": {
+    "*.ino": "cpp",
+    "*.h": "cpp"
+  },
+
+  "[cpp]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  }
+}

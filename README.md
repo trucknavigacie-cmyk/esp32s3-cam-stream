@@ -21,6 +21,7 @@ ktoré v dokumentácii nenájdeš a ktoré spôsobujú hodiny ladеnia.
 - [Poznámky k vozítku](#poznámky-k-vozítku)
 - [Známe obmedzenia](#známe-obmedzenia)
 - [Hotový firmware (flash bez IDE)](#hotový-firmware-flash-bez-ide)
+- [Konfigurácia prostredia](#konfigurácia-prostredia)
 - [Úpravy](#úpravy)
 
 ---
@@ -45,6 +46,42 @@ Viac možností (po častiach, iné porty, troubleshooting):
 | `ESP32S3_CAM_WEB.ino.partitions.bin` | 0x8000 | partition table |
 | `boot_app0.bin` | 0xE000 | OTA data |
 | `ESP32S3_CAM_WEB.ino.bin` | 0x10000 | aplikácia |
+
+---
+
+## Konfigurácia prostredia
+
+Všetko na reprodukciu buildu od nuly: [**build-config/**](build-config/)
+
+| Súbor | Na čo je |
+|---|---|
+| [VERSIONS.md](build-config/VERSIONS.md) | Presné verzie toolchainu |
+| [setup-environment.sh](build-config/setup-environment.sh) | Automatické nastavenie prostredia |
+| [arduino-cli.yaml](build-config/arduino-cli.yaml) | Referenčný config |
+| [ide2-settings.md](build-config/ide2-settings.md) | Arduino IDE 2 — Tools menu |
+| [vscode-settings.json](build-config/vscode-settings.json) | VS Code + Arduino extension |
+| [platformio.ini](build-config/platformio.ini) | PlatformIO alternativa |
+| [Dockerfile](build-config/Dockerfile) | Build v kontajneri |
+| [examples-ci/](examples-ci/) | CI build (GitHub Actions) — treba aktivovať |
+
+Rýchly štart:
+
+```bash
+cd build-config && ./setup-environment.sh
+```
+
+### Zistené prostredie
+
+| | |
+|---|---|
+| OS | Ubuntu 26.04.1 LTS, kernel 7.0.0-34 |
+| arduino-cli | 1.6.0 |
+| Arduino IDE | 2.3.10 (Flatpak `cc.arduino.IDE2`) |
+| esp32 core | **3.3.12** |
+| esptool | 5.3.1 |
+| GCC (esp-x32) | 2601 |
+| ESP-IDF SDK | v5.5.5 |
+| Java | OpenJDK 25.0.5 |
 
 ---
 
@@ -200,6 +237,16 @@ esp32s3-cam-stream/
 │   ├── app_httpd.h                   # HTTP server, MJPEG, FPS regulátor, UI
 │   ├── camera_pins.h                 # Pin mapping (overený na HW)
 │   └── sketch.json                   # FQBN + port pre IDE 2
+├── build-config/                     # konfigurácia prostredia
+│   ├── README.md
+│   ├── VERSIONS.md
+│   ├── setup-environment.sh
+│   ├── arduino-cli.yaml
+│   ├── ide2-settings.md
+│   ├── vscode-settings.json
+│   ├── platformio.ini
+│   └── Dockerfile
+├── examples-ci/                      # CI build (na aktivaciu)
 ├── releases/                         # hotový firmware (binárky)
 │   ├── ESP32S3_CAM_WEB.ino.merged.bin   # kompletný obraz 16 MB
 │   ├── ESP32S3_CAM_WEB.ino.bootloader.bin

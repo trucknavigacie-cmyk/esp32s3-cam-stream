@@ -1,0 +1,15 @@
+# Konfigurácia arduino-cli pre tento projekt
+#
+# Globalny config sa nacitava z ~/.arduino15/arduino-cli.yaml
+# Tento subor je referencia — co ma obsahovat.
+
+board_manager:
+  additional_urls:
+    - https://espressif.github.io/arduino-esp32/package_esp32_index.json
+
+directories:
+  data: /home/matus/.arduino15
+  downloads: /home/matus/.arduino15/staging
+  user: /home/matus/Arduino
+
+locale: en
