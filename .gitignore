@@ -1,0 +1,34 @@
+# Build artefakty
+build/
+*.bin
+*.elf
+*.map
+.arduino15/
+
+# Arduino
+*.hex
+*.eep
+*.lst
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logy
+*.log
+
+# Lokálne tajomstvá (ak si niekedy pridáš)
+secrets.h
+wifi_config.h
