@@ -1,12 +1,10 @@
 # Build artefakty
 build/
-*.bin
 *.elf
 *.map
 .arduino15/
 
-# Arduino
-*.hex
+# Arduino intermediate
 *.eep
 *.lst
 
@@ -32,3 +30,6 @@ venv/
 # Lokálne tajomstvá (ak si niekedy pridáš)
 secrets.h
 wifi_config.h
+
+# Pozn.: .bin subory v releases/ su zamerme commitovane (hotovy firmware).
+!releases/*.bin

@@ -20,7 +20,31 @@ ktoré v dokumentácii nenájdeš a ktoré spôsobujú hodiny ladеnia.
 - [Problémy a ich riešenia](#problémy-a-ich-riešenia)
 - [Poznámky k vozítku](#poznámky-k-vozítku)
 - [Známe obmedzenia](#známe-obmedzenia)
+- [Hotový firmware (flash bez IDE)](#hotový-firmware-flash-bez-ide)
 - [Úpravy](#úpravy)
+
+---
+
+## Hotový firmware (flash bez IDE)
+
+V priečinku [`releases/`](releases/) je **skompilovaný firmware** — netreba
+Arduino IDE ani toolchain.
+
+```bash
+esptool.py --chip esp32s3 --port /dev/ttyACM0 --baud 921600 \
+  write_flash 0x0 releases/ESP32S3_CAM_WEB.ino.merged.bin
+```
+
+Viac možností (po častiach, iné porty, troubleshooting):
+[releases/README.md](releases/README.md)
+
+| Súbor | Offset | Popis |
+|---|---|---|
+| `ESP32S3_CAM_WEB.ino.merged.bin` | 0x0 | kompletný obraz (16 MB) |
+| `ESP32S3_CAM_WEB.ino.bootloader.bin` | 0x0 | bootloader |
+| `ESP32S3_CAM_WEB.ino.partitions.bin` | 0x8000 | partition table |
+| `boot_app0.bin` | 0xE000 | OTA data |
+| `ESP32S3_CAM_WEB.ino.bin` | 0x10000 | aplikácia |
 
 ---
 
@@ -169,14 +193,22 @@ next_frame_us += period_us;
 ```
 esp32s3-cam-stream/
 ├── README.md
+├── LICENSE
 ├── .gitignore
 ├── ESP32S3_CAM_WEB/
-│   ├── ESP32S3_CAM_WEB.ino   # WiFi AP, init kamery, ladenie obrazu
-│   ├── app_httpd.h            # HTTP server, MJPEG, FPS regulátor, UI
-│   ├── camera_pins.h          # Pin mapping (overený na HW)
-│   └── sketch.json            # FQBN + port pre IDE 2
+│   ├── ESP32S3_CAM_WEB.ino          # WiFi AP, init kamery, ladenie obrazu
+│   ├── app_httpd.h                   # HTTP server, MJPEG, FPS regulátor, UI
+│   ├── camera_pins.h                 # Pin mapping (overený na HW)
+│   └── sketch.json                   # FQBN + port pre IDE 2
+├── releases/                         # hotový firmware (binárky)
+│   ├── ESP32S3_CAM_WEB.ino.merged.bin   # kompletný obraz 16 MB
+│   ├── ESP32S3_CAM_WEB.ino.bootloader.bin
+│   ├── ESP32S3_CAM_WEB.ino.partitions.bin
+│   ├── boot_app0.bin
+│   ├── ESP32S3_CAM_WEB.ino.bin
+│   └── README.md                     # ako flashovať bez IDE
 └── docs/
-    └── TROUBLESHOOTING.md     # Detailná diagnostika problémov
+    └── TROUBLESHOOTING.md            # Detailná diagnostika problémov
 ```
 
 ---
